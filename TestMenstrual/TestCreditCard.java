@@ -60,4 +60,9 @@ public class TestCreditCard {
         String answers = "67789345678567";
         assertEquals("Discover Card", cc.getCardType(answers));
     }
+    @Test
+    public void testCreditCardTypeUnknown() {
+        String answers = "87789345678567";
+        assertEquals("Unknown", cc.getCardType(answers));
+    }
 }

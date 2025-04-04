@@ -44,7 +44,7 @@ public class CreditCardMethod {
         else if(number.charAt(0) == '5') return "MasterCard";
         else if(number.charAt(0) == '6') return "Discover Card";
         else if(number.charAt(0)  == '3' && number.charAt(1) == '7') return "Amex";
-        return "cardType Unknown";
+        return "Unknown";
     }
 
 
