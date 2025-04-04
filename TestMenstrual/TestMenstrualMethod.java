@@ -92,6 +92,15 @@ public class TestMenstrualMethod {
         assertEquals("01/11/2022 - 08/11/2022",    menstrualMethod.getSafeDay("01/10/2022", 2));
         assertEquals("05/11/2022 - 12/11/2022",    menstrualMethod.getSafeDay("01/10/2022", 3));
     }
+    @Test
+    public void testMenstrualMethodGetFlowPeriodForAboveNormalDays() {
+        MenstrualMethod menstrualMethod = new MenstrualMethod();
+        assertEquals("29/10/2022 - 03/11/2022", menstrualMethod.getFlowPeriodS("01/10/2022"));
+        assertEquals("29/10/2022 - 05/11/2022", menstrualMethod.getFlowPeriodS("01/10/2022", 1, 3));
+        assertEquals("29/10/2022 - 01/11/2022", menstrualMethod.getFlowPeriodS("01/10/2022", 1, 1));
+    }
+
+
 
 
 

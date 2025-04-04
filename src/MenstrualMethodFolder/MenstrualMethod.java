@@ -140,4 +140,24 @@ public class MenstrualMethod {
 
         return  String.valueOf(safeDay.format(formatter)) + " - " + String.valueOf(endSafeDay.format(formatter));
     }
+
+
+    public String getFlowPeriodS(String firstDay, int selection , int flowDays) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate lastPeriod = LocalDate.parse(firstDay, formatter);
+        LocalDate flowPeriod = lastPeriod.plusDays(28);
+        LocalDate endFlowPeriod = flowPeriod.plusDays(5);
+
+        if(flowDays == 1) {
+            LocalDate endFlowPeriod1 = flowPeriod.plusDays(3);
+            return String.valueOf(flowPeriod.format(formatter)) + " - " + String.valueOf(endFlowPeriod1.format(formatter));
+        }
+        if(flowDays == 3) {
+            LocalDate endFlowPeriod3 = flowPeriod.plusDays(7);
+            return String.valueOf(flowPeriod.format(formatter)) + " - " + String.valueOf(endFlowPeriod3.format(formatter));
+        }
+
+        return String.valueOf(flowPeriod.format(formatter)) + " - " + String.valueOf(endFlowPeriod.format(formatter));
+
+    }
 }

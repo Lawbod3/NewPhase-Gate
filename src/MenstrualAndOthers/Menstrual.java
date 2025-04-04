@@ -109,8 +109,6 @@ public class Menstrual {
      Kindly Select any of the options to let me know the reason for using the App?
      1. Track Menstrual Cycle.
      2. Fertility And Family Planing.
-     3. Mental Health Awareness For Ladies.
-     4. Health Monitoring.
      """);
 
         while (true) {
@@ -118,6 +116,10 @@ public class Menstrual {
             try {
            System.out.print("Enter your choice: ");
            menuChoice = keyboard.nextInt();
+           while(menuChoice < 1 || menuChoice > 2) {
+               System.out.print("Please enter NUMBER from 1 to 2: ");
+               menuChoice = keyboard.nextInt();
+           }
            keyboard.nextLine();
 
 
@@ -148,13 +150,10 @@ public class Menstrual {
                System.out.printf("""
                        Low Probability of pregnancy is likely to be within this period %s%n
                        High Probability of pregnancy is likely to be within this period %s%n
-                       Ovulation day have the highest probability and is likely to be on this day %s%n
+                       Ovulation day have the highest probability of Pregnancy and is likely to be on this day %s%n
                        """, period.getSafeDay(result, cycleRange), period.getFertilityDays(result, cycleRange), period.getOvulationDate(result,cycleRange));
                break;
-           case 3:
-               break;
-           case 4:
-               break;
+
 
            default:
                System.out.println("Please enter a valid option!");
