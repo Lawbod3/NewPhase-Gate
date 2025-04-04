@@ -15,6 +15,7 @@ public class Menstrual {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String result = "";
+        int cycleRange = 0;
 
     System.out.println("Welcome to Women Menstrual Cycle");
         System.out.println("We will be asking some personal information");
@@ -85,7 +86,7 @@ public class Menstrual {
             while(true) {
                 try {
                     System.out.print("Enter your choice: ");
-                    int cycleRange = keyboard.nextInt();
+                     cycleRange = keyboard.nextInt();
                     while (cycleRange < 1 || cycleRange > 3) {
                         System.out.print("Please enter NUMBER from 1 to 3: ");
                         cycleRange = keyboard.nextInt();
@@ -138,8 +139,9 @@ public class Menstrual {
                        Your next Menstrual flow will be within this days %s%n
                        Your next Ovulation is likely to be on the %s%n
                        Your Pre Ovulation period will be within this days %s%n
+                       Your Ovulation is likely to be on this day %s%n
                        Your Post Ovulation period will be within this days %s
-                       """, period.getNextPeriodDate(result), period.getFlowPeriodS(result), period.getPreOvulation(result), period.getPreOvulation(result), period.getPostOvulation(result));
+                       """, period.getNextPeriodDate(result, cycleRange), period.getFlowPeriodS(result), period.getPreOvulation(result), period.getPreOvulation(result), period.getOvulationDate(result, cycleRange), period.getPostOvulation(result));
               break;
            case 2:
                System.out.println("You selected Fertility And Family Planing..");
@@ -147,7 +149,7 @@ public class Menstrual {
                        Low Probability of pregnancy is likely to be within this period %s%n
                        High Probability of pregnancy is likely to be within this period %s%n
                        Ovulation day have the highest probability and is likely to be on this day %s%n
-                       """, period.getSafeDay(result), period.getFertilityDays(result), period.getOvulationDate(result));
+                       """, period.getSafeDay(result, cycleRange), period.getFertilityDays(result, cycleRange), period.getOvulationDate(result,cycleRange));
                break;
            case 3:
                break;

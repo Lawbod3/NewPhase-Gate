@@ -74,14 +74,70 @@ public class MenstrualMethod {
     public String getNextPeriodDate(String firstDay, int selection) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate lastPeriod = LocalDate.parse(firstDay, formatter);
-        LocalDate nextPeriod = lastPeriod.plusDays(selection);
+        LocalDate nextPeriod = lastPeriod.plusDays(28);
         if(selection == 2) {
             LocalDate nextPeriod2 = lastPeriod.plusDays(31);
             return String.valueOf(nextPeriod2.format(formatter));
+        }
+        else if(selection == 3) {
+            LocalDate nextPeriod3 = lastPeriod.plusDays(35);
+            return String.valueOf(nextPeriod3.format(formatter));
         }
         return String.valueOf(nextPeriod.format(formatter));
 
 
 
+    }
+
+    public String getOvulationDate(String firstDate, int selection) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate lastPeriod = LocalDate.parse(firstDate, formatter);
+        LocalDate ovulationPeriod = lastPeriod.plusDays(42);
+        if(selection == 2) {
+            LocalDate ovulationPeriod2 = lastPeriod.plusDays(48);
+            return String.valueOf(ovulationPeriod2.format(formatter));
+        }
+        if(selection == 3) {
+            LocalDate ovulationPeriod3 = lastPeriod.plusDays(56);
+            return String.valueOf(ovulationPeriod3.format(formatter));
+        }
+        return String.valueOf(ovulationPeriod.format(formatter));
+    }
+
+    public String getFertilityDays(String firstDay, int selection) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate lastPeriod = LocalDate.parse(firstDay, formatter);
+        LocalDate fertilityPeriod = lastPeriod.plusDays(37);
+        if(selection == 2) {
+            LocalDate fertilityPeriod2 = lastPeriod.plusDays(43);
+            return String.valueOf(fertilityPeriod2.format(formatter)) + " - " + getOvulationDate(firstDay, selection);
+        }
+        if(selection == 3) {
+            LocalDate fertilityPeriod3 = lastPeriod.plusDays(51);
+            return String.valueOf(fertilityPeriod3.format(formatter) + " - " + getOvulationDate(firstDay, selection));
+        }
+
+
+        return String.valueOf(fertilityPeriod.format(formatter)) + " - " + getOvulationDate(firstDay);
+
+    }
+
+    public String getSafeDay(String firstDay, int selection) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate lastPeriod = LocalDate.parse(firstDay, formatter);
+        LocalDate safeDay = lastPeriod.plusDays(28);
+        LocalDate endSafeDay = safeDay.plusDays(7);
+        if(selection == 2) {
+            LocalDate safeDay2 = lastPeriod.plusDays(31);
+            LocalDate endSafeDay2 = safeDay2.plusDays(7);
+            return String.valueOf(safeDay2.format(formatter)) + " - " + String.valueOf(endSafeDay2.format(formatter));
+        }
+        if(selection == 3) {
+            LocalDate safeDay3 = lastPeriod.plusDays(35);
+            LocalDate endSafeDay3 = safeDay3.plusDays(7);
+            return String.valueOf(safeDay3.format(formatter)) + " - " + String.valueOf(endSafeDay3.format(formatter));
+        }
+
+        return  String.valueOf(safeDay.format(formatter)) + " - " + String.valueOf(endSafeDay.format(formatter));
     }
 }
