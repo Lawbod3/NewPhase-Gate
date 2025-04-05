@@ -65,7 +65,12 @@ public class TestBankApp {
     @Test
     public void testGetUniqueAccountNumber() {
         assertEquals("0000001000",bankApp.getAccountNumber());
+    }
+    @Test
+    public void testGetAccountNumberCounterIsStatic() {
 
+        BankAppMethod bank = new BankAppMethod();
+        assertEquals("0000001011",bank.getAccountNumber());
     }
 
 
