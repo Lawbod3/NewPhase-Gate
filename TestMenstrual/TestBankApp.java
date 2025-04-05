@@ -8,9 +8,9 @@ public class TestBankApp {
 
     @Test
     public void testGetBalance() {
-        assertEquals(bankApp.getBalance());
-
-
-
+         bankApp.setPin("1234");
+        assertTrue(bankApp.validatePin("1234"));
     }
+
 }
+
