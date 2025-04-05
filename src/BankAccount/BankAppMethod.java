@@ -7,6 +7,8 @@ public class BankAppMethod {
     private String pin;
     private String lastName;
     private String firstName;
+    private String accountNumber;
+    private static int accountNumberCounter = 1000;
 
     public void setPin(String number) {
         this.pin = number;
@@ -34,5 +36,23 @@ public class BankAppMethod {
 
     public void addDeposit(double amount) {
         this.balance += amount;
+    }
+
+    public void executeWitdrawal(double amount) {
+        if(amount > this.balance) throw new IllegalArgumentException("Not enough Balance for this operation");
+        this.balance -= amount;
+    }
+
+    public void changePin(String number) {
+        this.pin = number;
+    }
+
+    public String getAccountNumber() {
+        return this.accountNumber;
+    }
+
+    private void setAccountNumber(){
+        this.accountNumber = "000000" + accountNumberCounter++;
+
     }
 }
