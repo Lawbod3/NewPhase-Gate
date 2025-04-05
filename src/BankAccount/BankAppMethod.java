@@ -11,11 +11,21 @@ public class BankAppMethod {
     private String accountNumber;
     private static int accountNumberCounter = 999;
 
+    private static HashMap<String, BankAppMethod> accounts = new HashMap<>();
+
+
+
+
+    public BankAppMethod(String lastName, String firstName, String number) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pin = number;
+        this.accountNumber = setAccountNumber();
+
+    }
     public BankAppMethod() {
         this.accountNumber = setAccountNumber();
     }
-
-    private static HashMap<String, BankAppMethod> accounts = new HashMap<>();
 
     public void setPin(String number) {
         this.pin = number;

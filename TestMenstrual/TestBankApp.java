@@ -68,9 +68,13 @@ public class TestBankApp {
     }
     @Test
     public void testGetAccountNumberCounterIsStatic() {
-
         BankAppMethod bank = new BankAppMethod();
-        assertEquals("0000001011",bank.getAccountNumber());
+        assertEquals("0000001013",bank.getAccountNumber());
+    }
+    @Test
+    public void testAddConstructor() {
+        BankAppMethod bank1 = new BankAppMethod("Lawal", "Bode", "5666");
+        assertEquals("0000001011", bank1.getAccountNumber());
     }
 
 
