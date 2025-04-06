@@ -84,7 +84,10 @@ public class BankAccount {
                                 System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
                                 confirmPin = input.nextLine();
                             }
-                            if (pin.equals(confirmPin)) break;
+                            if (pin.equals(confirmPin)){
+                                passCode.add(confirmPin);
+                            break;
+                            }
                             else {
                                 System.out.println("Pin does not match. Please try again.");
                                 continue;
@@ -140,16 +143,40 @@ public class BankAccount {
                                 System.out.println("Phone number does not exist. Please try again.");
                                 continue;
                             }
-                            while(true) {
+                            String loginPin;
+
                                 System.out.print("Enter your account PIN: ");
-                                String loginPin = input.nextLine();
+                                 loginPin = input.nextLine();
                                 while (!validateForNumber0nlyPin(loginPin)) {
                                     System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
                                     loginPin = input.nextLine();
                                 }
+
+
+                            int index = phoneNumbers.indexOf(phoneNumberLogins);
+                            String value = passCode.get(index);
+                            if(!value.equals(loginPin)){
+                                System.out.println("PhoneNumber does  not match pin. Please try again.");
                                 break;
 
                             }
+                            System.out.print("Successfully logged in.");
+                            accounts.get(phoneNumberLogins);
+
+                            System.out.print("""
+                                    Select the operation you would like to carry out.
+                                    1. Close account.
+                                    2. Deposit money.
+                                    3. Withdraw money.
+                                    4. Check Account balance
+                                    5. Transfer from one account to another.
+                                    6.Change Pin.
+                                    7.Go back to Main menu.
+                                    """);
+                                  System.out.print("Enter your option: ");
+                                  int operation = input.nextInt();
+
+
 
                         }
                         else if(loginOption == 2) {
