@@ -45,4 +45,12 @@ public class TestingMenstrual {
         assertEquals("16/05/2025 - 21/05/2025", period.getFertilityPeriod());
 
     }
+    @Test
+    public void testGetFlowPeriodS() {
+        NewMenstrualMethod period = new NewMenstrualMethod();
+        period.setFlowDays(3);
+        period.setPeriodDays(28);
+        assertEquals("05/05/2025 - 06/05/2025",period.getNextFlowDays());
+
+    }
 }

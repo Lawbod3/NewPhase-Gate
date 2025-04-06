@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class NewMenstrualMethod {
     private int periodDays;
+    private int flowDays;
 
 
     public void setPeriodDays(int days) {
@@ -52,5 +53,13 @@ public class NewMenstrualMethod {
             return String.valueOf(nextFertilityPeriod3.format(formatter)) + " - " + String.valueOf(getNextOvulation());
         }
         return String.valueOf(nextFertilityPeriod.format(formatter)) + " - " + String.valueOf(getNextOvulation());
+    }
+
+    public void setFlowDays(int flow) {
+        this.flowDays = flow;
+    }
+
+    public String getNextFlowDays() {
+
     }
 }
