@@ -104,8 +104,62 @@ public class BankAccount {
 
 
                 case 2:
-                    break;
+                    boolean login = false;
+                    while (!login) {
+                        System.out.print("""
+                         
+                         1.Login your account.
+                         2.Go back to Main menu. 
+                        
+                             """);
+                        System.out.print("Enter your option: ");
+                        int loginOption;
+                        while (true) {
+                            try {
+                                loginOption = input.nextInt();
+                                while (loginOption < 1 || loginOption > 2) {
+                                    System.out.println("Please enter a number between 1 and 2.");
+                                    loginOption = input.nextInt();
+                                }
+                            }catch (InputMismatchException e) {
+                                System.out.println("Please enter an integer.");
+                                input.nextLine();
+                                continue;
+                            }
+                            input.nextLine();
+                            break;
+                        }
+                        if(loginOption == 1) {
+                            System.out.print("Enter your phoneNumber to login: ");
+                            String phoneNumberLogins = input.nextLine();
+                            while (!validatePhoneNumber(phoneNumberLogins)) {
+                                System.out.println("Please enter only numeric characters (0-9), make Sure it length is 11 : ");
+                                phoneNumberLogins = input.nextLine();
+                            }
+                            if (!phoneNumbers.contains(phoneNumberLogins)){
+                                System.out.println("Phone number does not exist. Please try again.");
+                                continue;
+                            }
+                            while(true) {
+                                System.out.print("Enter your account PIN: ");
+                                String loginPin = input.nextLine();
+                                while (!validateForNumber0nlyPin(loginPin)) {
+                                    System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
+                                    loginPin = input.nextLine();
+                                }
+                                break;
 
+                            }
+
+                        }
+                        else if(loginOption == 2) {
+                            System.out.println("Go back to Main menu. ");
+                            login = true;
+                        }
+
+                    }
+
+                    break;
                 case 3:
                     done = true;
                     break;
