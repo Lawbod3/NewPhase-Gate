@@ -65,6 +65,9 @@ public class BankAccount {
                             System.out.println("Please enter only numeric characters and make Sure it length is 11 (0-9): ");
                             phoneNumber = input.nextLine();
                         }
+                        if(phoneNumbers.contains(phoneNumber)){
+                            System.out.println("That phone number is already in use.");
+                            break;}
                         addUniquePhoneNumbers(phoneNumbers, phoneNumber);
                         String confirmPin;
                         while (true) {
@@ -302,6 +305,63 @@ public class BankAccount {
 
                                         break;
                                     case 5:
+                                        input.nextLine();
+                                        BankAppMethod transferAccount = accounts.get(phoneNumberLogins);
+                                        String receiverNumber;
+                                        boolean transfer = false;
+                                        while(!transfer) {
+                                            System.out.print("!!! Transfer Limit is #500000 !!!!!");
+                                            System.out.println("Enter beneficiary Account number or phoneNumber: ");
+                                            receiverNumber = input.nextLine();
+                                            while (!validatePhoneNumber(receiverNumber)) {
+                                                System.out.println("Please enter only numeric characters and make Sure it length is 11 (0-9): ");
+                                                receiverNumber = input.nextLine();
+                                            }
+                                            if (!phoneNumbers.contains(receiverNumber)) {
+                                                System.out.println("Beneficiary Account number does not exist.");
+                                                transfer = true;
+                                            }
+                                            System.out.println("Enter the amount you to transfer: ");
+                                            double amount = input.nextDouble();
+                                            while((amount < 0) || (amount > 500000)) {
+                                                System.out.println("Kindly re-enter, Your transfer amount does not go with the limit: ");
+                                                 amount = input.nextDouble();
+                                            }
+                                            int transferIndex = phoneNumbers.indexOf(phoneNumberLogins);
+                                            String transferValue = passCode.get(transferIndex);
+
+
+                                            System.out.println("Enter your pin to confirm your transfer : ");
+                                            input.nextLine();
+                                            String transferPin = input.nextLine();
+                                            if(!transferValue.equals(transferPin)) {
+                                                System.out.println("Wrong Pin. Try again ONE more time");
+                                            }
+                                            System.out.println("Enter your pin to confirm your transfer : ");
+                                             transferPin = input.nextLine();
+                                            if(!transferValue.equals(transferPin)) {
+                                                System.out.println("Wrong Pin. Exiting");
+                                                exitOperation = true;
+                                                transfer = true;
+
+                                            }
+
+
+
+                                            if(amount > transferAccount.getBalance()) {
+                                                System.out.println("Insufficient balance.");
+                                                transfer = true;
+                                            }
+                                            else {
+                                                BankAppMethod receiver = accounts.get(receiverNumber);
+                                                transferAccount.transferFund(receiver, amount);
+                                                System.out.printf("You have successfully transferred %.2f  to %s.", amount, receiver.getAccountUser());
+                                                System.out.println("Transfer successfully>>>>>>>>>.");
+                                                transfer = true;
+                                            }
+
+
+                                        }
                                         break;
                                     case 6:
                                         input.nextLine();
