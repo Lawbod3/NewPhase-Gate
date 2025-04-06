@@ -194,6 +194,55 @@ public class BankAccount {
                                 }
                                 switch (operation) {
                                     case 1:
+                                        boolean close = false;
+                                        while (!close) {
+                                            System.out.print(""" 
+                                                    Are you sure you want to Close your Account with us? (Y/N): 
+                                                    1.Yes.
+                                                    2.No.
+                                                    """);
+                                            System.out.print("Enter your option: ");
+                                            int closeOption = input.nextInt();
+                                            while (closeOption < 1 || closeOption > 2) {
+                                                System.out.println("Please enter only numeric character (1-2).");
+                                                closeOption = input.nextInt();
+                                            }
+
+                                            if (closeOption == 1) {
+                                                BankAppMethod closeAccount = accounts.get(phoneNumberLogins);
+                                                input.nextLine();
+                                                System.out.println("!!!! Your account can only be closed when empty !!!!");
+                                                System.out.println("Input your account PIN: ");
+                                                String closePin = input.nextLine();
+                                                while (!validateForNumber0nlyPin(closePin)) {
+                                                    System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
+                                                    closePin = input.nextLine();
+                                                }
+
+                                                if(closeAccount.getBalance() > 0.00 ||  (!closeAccount.validatePin(closePin))){
+                                                    System.out.println("Your account balance is greater than 0.00, Account can only be close when empty");
+                                                    close = true;
+                                                }
+                                               else{
+                                                   accounts.remove(phoneNumberLogins);
+                                                   phoneNumbers.remove(phoneNumberLogins);
+                                                   passCode.remove(closePin);
+                                                   System.out.println("Your account has been closed.");
+                                                   exitOperation = true;
+                                                   close = true;
+
+                                               }
+
+
+
+                                            }
+                                            else {
+                                                close = true;
+                                            }
+
+                                        }
+
+
                                         break;
                                     case 2:
 
@@ -344,7 +393,6 @@ public class BankAccount {
 
         }
     }
-
 
 
     public static boolean validateForNumber0nlyPin(String input) {
