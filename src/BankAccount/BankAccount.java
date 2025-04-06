@@ -99,7 +99,7 @@ public class BankAccount {
                         BankAppMethod account = new BankAppMethod(lastName, firstName, confirmPin);
                         accounts.put(phoneNumber, account);
 
-                        System.out.println("Account created Successfully");
+                        System.out.println("Account created Successfully>>>>>>>>>>>>.");
 
 
                         break;
@@ -108,19 +108,21 @@ public class BankAccount {
 
                 case 2:
                     boolean login = false;
+                    int loginOption;
                     while (!login) {
                         System.out.print("""
                          
                          1.Login your account.
                          2.Go back to Main menu. 
+                         3.Exit the program.
                         
                              """);
                         System.out.print("Enter your option: ");
-                        int loginOption;
+
                         while (true) {
                             try {
                                 loginOption = input.nextInt();
-                                while (loginOption < 1 || loginOption > 2) {
+                                while (loginOption < 1 || loginOption > 3) {
                                     System.out.println("Please enter a number between 1 and 2.");
                                     loginOption = input.nextInt();
                                 }
@@ -160,31 +162,89 @@ public class BankAccount {
                                 break;
 
                             }
-                            System.out.print("Successfully logged in.");
+                            System.out.println("Successfully logged in.>>>>>>>>>>>>>>");
                             accounts.get(phoneNumberLogins);
 
-                            System.out.print("""
-                                    Select the operation you would like to carry out.
-                                    1. Close account.
-                                    2. Deposit money.
-                                    3. Withdraw money.
-                                    4. Check Account balance
-                                    5. Transfer from one account to another.
-                                    6.Change Pin.
-                                    7.Go back to Main menu.
-                                    """);
-                                  System.out.print("Enter your option: ");
-                                  int operation = input.nextInt();
+                            boolean exitOperation = false;
+                            int operation;
+                            while (!exitOperation) {
+                                System.out.print("""
+                                        
+                                        Select the operation you would like to carry out.
+                                        1. Close account.
+                                        2. Deposit money.
+                                        3. Withdraw money.
+                                        4. Check Account balance
+                                        5. Transfer from one account to another.
+                                        6.Change Pin.
+                                        7.Go back to Main menu.
+                                        
+                                        """);
+                                System.out.print("Enter your option: ");
+                                try {
+                                    operation = input.nextInt();
+                                    while (operation < 1 || operation > 7) {
+                                        System.out.println("Please enter a number between 1 and 7.");
+                                        operation = input.nextInt();
+                                    }
+                                }catch(InputMismatchException e) {
+                                    System.out.println("Please enter only numeric character (1-7).");
+                                    input.nextLine();
+                                    continue;
+                                }
+                                switch (operation) {
+                                    case 1:
+                                        break;
+                                    case 2:
 
+                                        System.out.println("Deposit limit through ATM is #2,147,483,646 maximum limit and #50 minimum limit : ");
+                                        boolean limit = false;
+                                        int depositAmount;
+                                        while(!limit) {
+                                            System.out.print("Enter the amount of your deposit: ");
+                                            try {
+                                                depositAmount = input.nextInt();
+                                                while(depositAmount < 50 || depositAmount > 2147483646) {
+                                                    System.out.println("your deposit amount does not go with the limit .");
+                                                    limit = true;
+                                                    break;
+                                                }
+                                            }
+                                            catch(InputMismatchException e) {
+                                                System.out.println("Please enter only numeric character (1-7).");
+                                                input.nextLine();
+                                                continue;
 
+                                            }
+                                            break;
+                                        }
+                                        break;
+                                    case 3:
+                                        break;
+                                    case 4:
+                                        break;
+                                    case 5:
+                                        break;
+                                    case 6:
+                                        break;
+                                    case 7:
+                                        break;
+                                }
 
+                            }
                         }
                         else if(loginOption == 2) {
                             System.out.println("Go back to Main menu. ");
                             login = true;
                         }
+                        else {
+                            done = true;
+                            login = true;
+                        }
+
 
                     }
+
 
                     break;
                 case 3:
