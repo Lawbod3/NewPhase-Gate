@@ -214,20 +214,63 @@ public class BankAccount {
                                                 System.out.println("Please enter only numeric character (1-7).");
                                                 input.nextLine();
                                                 continue;
-
                                             }
+                                            BankAppMethod account = accounts.get(phoneNumberLogins);
+                                            account.addDeposit(depositAmount);
+
+                                            System.out.printf("Your deposit of #%d is Successfully added to your Account>>>>>>>%n", depositAmount);
+
                                             break;
                                         }
                                         break;
                                     case 3:
+                                        System.out.println("Withdrawal limit through ATM is #500,000 maximum limit and #50 minimum limit : ");
+                                        boolean exitWithdrawal = false;
+                                        int withdrawAmount;
+                                        while(!exitWithdrawal) {
+                                            System.out.print("Enter the amount of your withdrawal: ");
+                                            try {
+                                                withdrawAmount = input.nextInt();
+                                                while (withdrawAmount < 50 || withdrawAmount > 500000) {
+                                                    System.out.println("your withdrawal amount does not go with the limit .");
+                                                    exitWithdrawal = true;
+                                                    break;
+                                                }
+
+                                            }catch(InputMismatchException e) {
+                                                System.out.println("Your withdrawal amount does not go with the limit .");
+                                                input.nextLine();
+                                                continue;
+                                            }
+                                            BankAppMethod account = accounts.get(phoneNumberLogins);
+                                            if(withdrawAmount > account.getBalance()) {
+                                                System.out.println("Insufficient balance.");
+                                                exitWithdrawal = true;
+                                            }
+                                            else {
+                                                account.executeWitdrawal(withdrawAmount);
+                                                System.out.printf("Your withdraw of #%d is Successfully deducted from your Account>>>>>>>%n", withdrawAmount);
+
+                                            }
+
+
+                                            break;
+                                        }
+
                                         break;
                                     case 4:
+                                        BankAppMethod account = accounts.get(phoneNumberLogins);
+                                        System.out.printf("Your account balance is: #%.2f%n", account.getBalance());
+
                                         break;
                                     case 5:
                                         break;
                                     case 6:
+                                        System.out.println("Enter your account PIN: ");
+
                                         break;
                                     case 7:
+                                        exitOperation = true;
                                         break;
                                 }
 
