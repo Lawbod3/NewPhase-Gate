@@ -62,19 +62,27 @@ public class TestBankApp {
         assertFalse(bankApp.validatePin(password));
         assertTrue(bankApp.validatePin("2222"));
     }
-    @Test
-    public void testGetUniqueAccountNumber() {
-        assertEquals("0000001000",bankApp.getAccountNumber());
-    }
+
     @Test
     public void testGetAccountNumberCounterIsStatic() {
         BankAppMethod bank = new BankAppMethod();
+        bank.setAccountNumber("0000001013");
         assertEquals("0000001013",bank.getAccountNumber());
     }
     @Test
     public void testAddConstructor() {
         BankAppMethod bank1 = new BankAppMethod("Lawal", "Bode", "5666");
+        bank1.setAccountNumber("0000001011");
         assertEquals("0000001011", bank1.getAccountNumber());
+    }
+    @Test
+    public void testTransfer() {
+        BankAppMethod bank1 = new BankAppMethod("Lawal", "Bode", "5666");
+        BankAppMethod bank2 = new BankAppMethod("Lawal", "Bode", "5666");
+        bank1.addDeposit(500.00);
+        double amount = 200;
+        bank1.transferFund(bank2, amount);
+        assertEquals(amount, bank2.getBalance(), 0.00);
     }
 
 

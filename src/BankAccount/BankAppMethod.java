@@ -1,6 +1,5 @@
 package BankAccount;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class BankAppMethod {
@@ -9,22 +8,15 @@ public class BankAppMethod {
     private String lastName;
     private String firstName;
     private String accountNumber;
-    private static int accountNumberCounter = 999;
-
-    private static HashMap<String, BankAppMethod> accounts = new HashMap<>();
-
-
 
 
     public BankAppMethod(String lastName, String firstName, String number) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pin = number;
-        this.accountNumber = setAccountNumber();
 
     }
     public BankAppMethod() {
-        this.accountNumber = setAccountNumber();
     }
 
     public void setPin(String number) {
@@ -68,8 +60,13 @@ public class BankAppMethod {
         return this.accountNumber;
     }
 
-    private static String setAccountNumber(){
-        int number = accountNumberCounter++;
-       return String.format( "000000%d", number);
+    public void setAccountNumber(String phoneNumber) {
+       this.accountNumber = phoneNumber;
+    }
+
+    public void transferFund(BankAppMethod bank2, double amount) {
+        executeWitdrawal(amount);
+        bank2.addDeposit(amount);
+
     }
 }

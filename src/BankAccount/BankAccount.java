@@ -9,9 +9,7 @@ public class BankAccount {
     public static void main(String[] args) {
         ArrayList<String> phoneNumbers = new ArrayList<>();
         ArrayList<String> passCode = new ArrayList<>();
-
         HashMap<String, BankAppMethod> accounts = new HashMap<>();
-
 
         Scanner input = new Scanner(System.in);
         boolean done = false;
@@ -54,7 +52,6 @@ public class BankAccount {
                             firstName = input.nextLine();
                         }
 
-
                         System.out.print("Enter your lastName: ");
                         String lastName = input.nextLine();
                         while (!validateStrings(lastName)) {
@@ -95,16 +92,13 @@ public class BankAccount {
 
                         }
 
-
                         BankAppMethod account = new BankAppMethod(lastName, firstName, confirmPin);
                         accounts.put(phoneNumber, account);
 
                         System.out.println("Account created Successfully>>>>>>>>>>>>.");
 
-
                         break;
                     }
-
 
                 case 2:
                     boolean login = false;
@@ -153,7 +147,6 @@ public class BankAccount {
                                     System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
                                     loginPin = input.nextLine();
                                 }
-
 
                             int index = phoneNumbers.indexOf(phoneNumberLogins);
                             String value = passCode.get(index);
@@ -233,15 +226,12 @@ public class BankAccount {
 
                                                }
 
-
-
                                             }
                                             else {
                                                 close = true;
                                             }
 
                                         }
-
 
                                         break;
                                     case 2:
@@ -302,7 +292,6 @@ public class BankAccount {
 
                                             }
 
-
                                             break;
                                         }
 
@@ -356,13 +345,9 @@ public class BankAccount {
                                                 accountChangePin.changePin(confirmPin);
                                                 System.out.println("PIN Changed Successfully");
                                                 exitPin = true;
-
                                             }
 
-
-
                                         }
-
                                         break;
                                     case 7:
                                         exitOperation = true;
@@ -380,32 +365,23 @@ public class BankAccount {
                             login = true;
                         }
 
-
                     }
-
-
                     break;
                 case 3:
                     done = true;
                     break;
             }
 
-
         }
     }
-
-
     public static boolean validateForNumber0nlyPin(String input) {
         if(input.length()  == 4 && input.matches("^[0-9]+$")) return true;
         return false;
     }
-
     public static void addUniquePhoneNumbers(ArrayList<String> phoneNumbers, String input) {
         if(!phoneNumbers.contains(input)) phoneNumbers.add(input);
         else System.out.println("That phone number is already in use.");
-
     }
-
     public static boolean validateStrings(String input){
         if(input.matches("^[A-Za-z]+$")) return true;
         return false;
