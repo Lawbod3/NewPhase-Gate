@@ -266,7 +266,53 @@ public class BankAccount {
                                     case 5:
                                         break;
                                     case 6:
-                                        System.out.println("Enter your account PIN: ");
+                                        input.nextLine();
+                                        BankAppMethod accountChangePin = accounts.get(phoneNumberLogins);
+                                        boolean exitPin = false;
+                                        String changePin;
+                                        while(!exitPin) {
+                                            System.out.println("Enter your Current account PIN: ");
+                                            String currentPin = input.nextLine();
+                                            while (!validateForNumber0nlyPin(currentPin)) {
+                                                System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
+                                                currentPin = input.nextLine();
+
+                                            }
+                                            int indexCurrentPin = phoneNumbers.indexOf(phoneNumberLogins);
+                                            String valueOfCurrentPin = passCode.get(indexCurrentPin);
+
+                                            if(!valueOfCurrentPin.equals(currentPin)) {
+                                                System.out.println("Wrong PIN");
+                                                break;
+
+                                            }
+                                            System.out.println("Enter your new account PIN: ");
+                                            changePin = input.nextLine();
+                                            while(!validateForNumber0nlyPin(changePin)) {
+                                                System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
+                                                changePin = input.nextLine();
+                                            }
+                                            System.out.println("Confirm your new account PIN: ");
+                                            String confirmPin = input.nextLine();
+                                            while (!validateForNumber0nlyPin(confirmPin)) {
+                                                System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
+                                                confirmPin = input.nextLine();
+                                            }
+                                            if(!confirmPin.equals(changePin)) {
+                                                System.out.println("PIN Does not match....going back to Main menu");
+                                                exitPin = true;
+                                            }
+                                            else {
+                                                passCode.set(indexCurrentPin, confirmPin);
+                                                accountChangePin.changePin(confirmPin);
+                                                System.out.println("PIN Changed Successfully");
+                                                exitPin = true;
+
+                                            }
+
+
+
+                                        }
 
                                         break;
                                     case 7:

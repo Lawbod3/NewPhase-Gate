@@ -36,9 +36,9 @@ public class BankAppMethod {
       return false;
     }
 
-    public void setAccountUser(String lawal, String olabode) {
-        this.lastName = lawal;
-        this.firstName = olabode;
+    public void setAccountUser(String lastName, String firstName) {
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 
 
