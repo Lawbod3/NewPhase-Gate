@@ -106,4 +106,12 @@ public class NewMenstrualMethod {
         return nextOvulation.format(formatter) + " - " + String.valueOf(getEndOfNextCycle());
 
     }
+
+    public String getSafeDay() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate setDate = LocalDate.parse(firstDayOfLastPeriod, formatter);
+        LocalDate nextFlowDays = setDate.plusDays(periodDays + flowDays + 2);
+        return  String.valueOf(getNextPeriodDays()) + " - " +  String.valueOf(nextFlowDays.format(formatter));
+
+    }
 }

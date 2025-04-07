@@ -84,4 +84,12 @@ public class TestingMenstrual {
         period.setPeriodDays(28);
         assertEquals("19/05/2025 - 31/05/2025", period.getNextPostOvulation());
     }
+    @Test
+    public void testGetPreFertilityPeriodDay() {
+        NewMenstrualMethod period = new NewMenstrualMethod();
+        period.setLastPeriodDate("06/04/2025");
+        period.setPeriodDays(28);
+        assertEquals("04/05/2025 - 06/05/2025", period.getSafeDay());
+
+    }
 }

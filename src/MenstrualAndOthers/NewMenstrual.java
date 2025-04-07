@@ -33,7 +33,8 @@ public class NewMenstrual {
             break;
         }
         System.out.print("How many days does your Menstrual Cycle last: ");
-        while(true) {
+        boolean close = false;
+        while(!close) {
             String days = keyboard.nextLine();
            while(!nullValidate(days)){
                System.out.print("Invalid input, please try again make sure it two digit numbers: ");
@@ -42,77 +43,106 @@ public class NewMenstrual {
            int day = Integer.parseInt(days);
            if(day < 21 || day > 35){
                System.out.print("menstrual cycle last within this period 21 - 31days, please go see a doctor");
+               close = true;
                break;
            }
            period.setPeriodDays(day);
-            break;
-        }
-        while(true) {
-            System.out.print("How many days does your flow days last: ");
-            String flowDays = keyboard.nextLine();
-            while(!flowValidate(flowDays)){
-                System.out.print("Invalid input, please try again: ");
-                flowDays = keyboard.nextLine();
-            }
-            int flowday = Integer.parseInt(flowDays);
-            if(flowday < 1 || flowday > 7){
-                System.out.print("bleeding more than 7days or not bleeding at all, please go see a doctor");
+            while(true) {
+                System.out.print("How many days does your flow days last: ");
+                String flowDays = keyboard.nextLine();
+                while(!flowValidate(flowDays)){
+                    System.out.print("Invalid input, please try again: ");
+                    flowDays = keyboard.nextLine();
+                }
+                int flowday = Integer.parseInt(flowDays);
+                if(flowday < 1 || flowday > 7){
+                    System.out.print("bleeding more than 7days or not bleeding at all, please go see a doctor");
+                    close = true;
+                    break;
+                }
+                period.setFlowDays(flowday);
                 break;
             }
-            period.setFlowDays(flowday);
-            break;
-        }
 
-        System.out.print("""
+
+
+            System.out.print("""
      Whats your reason for using the App?
      1. Track Menstrual Cycle.
      2. Fertility And Family Planing.
+     3. Health and mental Awareness.
+     4. Exit App.
      """);
-        String menuChoice;
-        int choice;
-        while (true) {
-            try{
-                System.out.print("Enter your choice: ");
-                menuChoice = keyboard.nextLine();
-                if(menuChoice.isEmpty()){
+            String menuChoice;
+            int choice;
+            while (true) {
+                try{
+                    System.out.print("Enter your choice: ");
+                    menuChoice = keyboard.nextLine();
+                    if(menuChoice.isEmpty()){
+                        continue;
+                    }
+                    choice = Integer.parseInt(menuChoice);
+                    while (choice < 1 || choice > 2) {
+                        System.out.print("Please enter NUMBER from 1 to 2: ");
+                        keyboard.nextLine();
+                        choice = keyboard.nextInt();
+                    }
+
+                } catch (InputMismatchException e) {
+                    System.out.print("Please enter a valid option!");
+                    keyboard.nextLine();
                     continue;
                 }
-                choice = Integer.parseInt(menuChoice);
-                while (choice < 1 || choice > 2) {
-                    System.out.print("Please enter NUMBER from 1 to 2: ");
-                    keyboard.nextLine();
-                    choice = keyboard.nextInt();
-                }
-                keyboard.nextLine();
-
-            } catch (InputMismatchException e) {
-                System.out.print("Please enter a valid option!");
-                keyboard.nextLine();
-                continue;
-            }
-            switch(choice) {
-                case 1:
-                    System.out.println("You selected Track Menstrual Cycle.");
-                    System.out.printf("""
+                switch(choice) {
+                    case 1:
+                        System.out.println("You selected Track Menstrual Cycle.");
+                        System.out.printf("""
                        Your next Menstrual period is likely to be on the %s%n
                        Your next Menstrual flow will be within this days %s%n
                        Your next Ovulation is likely to be on the %s%n
                        Your Pre Ovulation period will be within this days %s%n
-                       Your Ovulation is likely to be on this day %s%n
-                       Your Post Ovulation period will be within this days %s
+                       Your Post Ovulation period will be within this days %s%n
                        Your End of next menstrual Cycle is likely to be on the %s%n
                        """,period.getNextPeriodDays(), period.getNextFlowDays(), period.getNextOvulation(), period.getNextPreOvulation(),  period.getNextPostOvulation(), period.getEndOfNextCycle());
-                    break;
-                case 2:
-                    System.out.println("You selected Fertility And Family Planing..");
-                    System.out.printf("""
+                        break;
+                    case 2:
+                        System.out.println("You selected Fertility And Family Planing..");
+                        System.out.printf("""
                        Low Probability of pregnancy is likely to be within this period %s%n
                        High Probability of pregnancy is likely to be within this period %s%n
                        Ovulation day have the highest probability of Pregnancy and is likely to be on this day %s%n
-                       """, period.getFertilityPeriod(), period.getNextOvulation());
-                    break;
+                       """,period.getSafeDay(), period.getFertilityPeriod(), period.getNextOvulation());
+                        break;
+                     case 3:
+                         System.out.println("""
+                         Menstrual Phase day 1-5
+                         Menstrual cramps: Painful cramps in the lower abdomen or back that can last for several days.
+                         You might be having slight headache during this period.
+                         You might feel unusually tired.
+                         
+                         Menstrual Phase day 6-13
+                         Improved energy level and mood improvement.
+                         
+                         Menstrual Phase day 14
+                         The ovulation is likely to be within this day for 28days Cycle.
+                         
+                         Menstrual Phase day 15-28
+                         Breast Tenderness: Some women experience swollen, sore, or tender breasts.
+                         Many women experience mood swing this period.
+                         Post ovulation in some women lead to vomiting. 
+                         
+                   
+                         """);
+                         break;
+                    case 4:
+                             close = true;
+                             break;
+                }
+                break;
             }
-          break;
+
+            break;
         }
 
         }
