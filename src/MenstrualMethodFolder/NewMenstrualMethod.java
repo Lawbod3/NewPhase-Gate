@@ -60,6 +60,10 @@ public class NewMenstrualMethod {
     }
 
     public String getNextFlowDays() {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate today = LocalDate.now();
+            LocalDate nextFlowDays = LocalDate.now().plusDays(periodDays + flowDays);
+            return  String.valueOf(getNextPeriodDays()) + " - " +  String.valueOf(nextFlowDays.format(formatter));
 
     }
 }
