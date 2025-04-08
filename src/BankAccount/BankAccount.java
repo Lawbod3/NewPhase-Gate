@@ -9,7 +9,7 @@ public class BankAccount {
     public static void main(String[] args) {
         ArrayList<String> phoneNumbers = new ArrayList<>();
         ArrayList<String> passCode = new ArrayList<>();
-        HashMap<String, BankAppMethod> accounts = new HashMap<>();
+        HashMap<String, AccountInfo> accounts = new HashMap<>();
 
         Scanner input = new Scanner(System.in);
         boolean done = false;
@@ -91,7 +91,7 @@ public class BankAccount {
 
                         }
 
-                        BankAppMethod account = new BankAppMethod(lastName, firstName, confirmPin);
+                        AccountInfo account = new AccountInfo(lastName, firstName, confirmPin);
                         accounts.put(phoneNumber, account);
 
                         System.out.printf("Account created Successfully. Account number: %s\n>>>>>>>>>>>>.", phoneNumber);
@@ -200,7 +200,7 @@ public class BankAccount {
                                             closeOption = Integer.parseInt(closingOption);
 
                                             if (closeOption == 1) {
-                                                BankAppMethod closeAccount = accounts.get(phoneNumberLogins);
+                                                AccountInfo closeAccount = accounts.get(phoneNumberLogins);
                                                 System.out.println("!!!! Your account can only be closed when empty !!!!");
                                                 System.out.println("Input your account PIN: ");
                                                 String closePin = input.nextLine();
@@ -251,7 +251,7 @@ public class BankAccount {
                                                 input.nextLine();
                                                 continue;
                                             }
-                                            BankAppMethod account = accounts.get(phoneNumberLogins);
+                                            AccountInfo account = accounts.get(phoneNumberLogins);
                                             account.addDeposit(depositAmount);
                                             System.out.printf("Your deposit of #%d is Successfully added to your Account>>>>>>>%n", depositAmount);
                                             break;
@@ -275,7 +275,7 @@ public class BankAccount {
                                                 input.nextLine();
                                                 continue;
                                             }
-                                            BankAppMethod account = accounts.get(phoneNumberLogins);
+                                            AccountInfo account = accounts.get(phoneNumberLogins);
                                             if(withdrawAmount > account.getBalance()) {
                                                 System.out.println("Insufficient balance.");
                                                 exitWithdrawal = true;
@@ -288,11 +288,11 @@ public class BankAccount {
                                         }
                                         break;
                                     case 4:
-                                        BankAppMethod account = accounts.get(phoneNumberLogins);
+                                        AccountInfo account = accounts.get(phoneNumberLogins);
                                         System.out.printf("Your account balance is: #%.2f%n", account.getBalance());
                                         break;
                                     case 5:
-                                        BankAppMethod transferAccount = accounts.get(phoneNumberLogins);
+                                        AccountInfo transferAccount = accounts.get(phoneNumberLogins);
                                         String receiverNumber;
                                         boolean transfer = false;
                                         while(!transfer) {
@@ -343,7 +343,7 @@ public class BankAccount {
                                                 transfer = true;
                                             }
                                             else {
-                                                BankAppMethod receiver = accounts.get(receiverNumber);
+                                                AccountInfo receiver = accounts.get(receiverNumber);
                                                 transferAccount.transferFund(receiver, amount);
                                                 System.out.printf("You have successfully transferred %.2f  to %s.", amount, receiver.getAccountUser());
                                                 System.out.println("Transfer successfully>>>>>>>>>.");
@@ -352,7 +352,7 @@ public class BankAccount {
                                         }
                                         break;
                                     case 6:
-                                        BankAppMethod accountChangePin = accounts.get(phoneNumberLogins);
+                                        AccountInfo accountChangePin = accounts.get(phoneNumberLogins);
                                         boolean exitPin = false;
                                         String changePin;
                                         while(!exitPin) {

@@ -20,6 +20,8 @@ const sumOfArrayAtLastIndex = function (array) {
     return sum;
 }
 
+const sumOfArrayLuhmIndex =
+
 console.log(convertToArray("123456789"));
 console.log(validateLength("123456789"));
 console.log(sumOfArrayAtLastIndex([1,2,1,4,1,6,1,8,1,0,1,12,1]))

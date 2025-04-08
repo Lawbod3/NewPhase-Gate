@@ -1,8 +1,6 @@
 package BankAccount;
 
-import java.util.HashMap;
-
-public class BankAppMethod {
+public class AccountInfo {
     private double balance = 0.00;
     private String pin;
     private String lastName;
@@ -10,13 +8,13 @@ public class BankAppMethod {
     private String accountNumber;
 
 
-    public BankAppMethod(String lastName, String firstName, String number) {
+    public AccountInfo(String lastName, String firstName, String number) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pin = number;
 
     }
-    public BankAppMethod() {
+    public AccountInfo() {
     }
 
     public void setPin(String number) {
@@ -64,7 +62,7 @@ public class BankAppMethod {
        this.accountNumber = phoneNumber;
     }
 
-    public void transferFund(BankAppMethod bank2, double amount) {
+    public void transferFund(AccountInfo bank2, double amount) {
         executeWitdrawal(amount);
         bank2.addDeposit(amount);
 
