@@ -6,13 +6,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BankAccount {
+   private static Scanner input = new Scanner(System.in);
+   private static BankDataBase data = new BankDataBase();
     public static void main(String[] args) {
 
         ArrayList<String> phoneNumbers = new ArrayList<>();
         ArrayList<String> passCode = new ArrayList<>();
-        HashMap<String, AccountInfo> accounts = new HashMap<>();
 
-        Scanner input = new Scanner(System.in);
+
+
         boolean done = false;
         System.out.println("Welcome to the FirstBank");
         while (!done) {
@@ -74,12 +76,11 @@ public class BankAccount {
                                 System.out.println("Please enter only four digits Pin: .");
                                 pin = input.nextLine();
                             }
-
                             System.out.print("Enter confirm account PIN: ");
                             confirmPin = input.nextLine();
                             while (!validateForNumber0nlyPin(pin)) {
-                                System.out.println("Please enter only four digits Pin: ");
-                                confirmPin = input.nextLine();
+                                System.out.println("Please enter only four digits Pin: .");
+                                pin = input.nextLine();
                             }
                             if (pin.equals(confirmPin)){
                                 passCode.add(confirmPin);
@@ -89,15 +90,12 @@ public class BankAccount {
                                 System.out.println("Pin does not match. Please try again.");
                                 continue;
                             }
-
                         }
-                        BankDataBase data = new BankDataBase();
 
                         AccountInfo account = new AccountInfo(lastName, firstName, confirmPin);
                         account.setAccountNumber(phoneNumber);
-                        accounts.put(phoneNumber, account);
-                        data.add(account);
 
+                        data.add(account);
                         System.out.printf("Account created Successfully. Account number: %s\n>>>>>>>>>>>>.", phoneNumber);
 
                         break;
@@ -130,7 +128,7 @@ public class BankAccount {
                             System.out.print("Enter your phoneNumber to login: ");
                             String phoneNumberLogins = input.nextLine();
                             while (!validatePhoneNumber(phoneNumberLogins)) {
-                                System.out.println("Please enter only numeric characters (0-9), make Sure it length is 11 : ");
+                                System.out.println("Please enter only 11 digits: ");
                                 phoneNumberLogins = input.nextLine();
                             }
                             if (!phoneNumbers.contains(phoneNumberLogins)){
@@ -141,21 +139,18 @@ public class BankAccount {
 
                                 System.out.print("Enter your account PIN: ");
                                  loginPin = input.nextLine();
-                                while (!validateForNumber0nlyPin(loginPin)) {
-                                    System.out.println("Please enter only numeric characters and make Sure it length is 4 (0-9).");
-                                    loginPin = input.nextLine();
-                                }
-
+                            while (!validateForNumber0nlyPin(loginPin)) {
+                                System.out.println("Please enter only four digits Pin: .");
+                                loginPin = input.nextLine();
+                            }
                             int index = phoneNumbers.indexOf(phoneNumberLogins);
                             String value = passCode.get(index);
                             if(!value.equals(loginPin)){
                                 System.out.println("PhoneNumber does  not match pin. Please try again.");
                                 break;
-
                             }
                             System.out.println("Successfully logged in.>>>>>>>>>>>>>>");
-                            accounts.get(phoneNumberLogins);
-
+                            data.getAccount(phoneNumberLogins);
                             boolean exitOperation = false;
                             int operation;
                             while (!exitOperation) {
@@ -204,21 +199,21 @@ public class BankAccount {
                                             closeOption = Integer.parseInt(closingOption);
 
                                             if (closeOption == 1) {
-                                                AccountInfo closeAccount = accounts.get(phoneNumberLogins);
+                                                AccountInfo closeAccount = data.getAccount(phoneNumberLogins);
                                                 System.out.println("!!!! Your account can only be closed when empty !!!!");
                                                 System.out.println("Input your account PIN: ");
                                                 String closePin = input.nextLine();
                                                 while (!validateForNumber0nlyPin(closePin)) {
-                                                    System.out.println("Invalid input only four digit number: ");
+                                                    System.out.println("Please enter only four digits Pin: .");
                                                     closePin = input.nextLine();
                                                 }
-
                                                 if(closeAccount.getBalance() > 0.00 ||  (!closeAccount.validatePin(closePin))){
                                                     System.out.println("Account can only be close when empty and when balance is not empty");
                                                     close = true;
                                                 }
                                                else{
-                                                   accounts.remove(phoneNumberLogins);
+
+                                                   data.remove(closeAccount);
                                                    phoneNumbers.remove(phoneNumberLogins);
                                                    passCode.remove(closePin);
                                                    System.out.println("Your account has been closed.");
@@ -255,7 +250,7 @@ public class BankAccount {
                                                 input.nextLine();
                                                 continue;
                                             }
-                                            AccountInfo account = accounts.get(phoneNumberLogins);
+                                            AccountInfo account = data.getAccount(phoneNumberLogins);
                                             account.addDeposit(depositAmount);
                                             System.out.printf("Your deposit of #%d is Successfully added to your Account>>>>>>>%n", depositAmount);
                                             break;
@@ -279,7 +274,7 @@ public class BankAccount {
                                                 input.nextLine();
                                                 continue;
                                             }
-                                            AccountInfo account = accounts.get(phoneNumberLogins);
+                                            AccountInfo account = data.getAccount(phoneNumberLogins);
                                             if(withdrawAmount > account.getBalance()) {
                                                 System.out.println("Insufficient balance.");
                                                 exitWithdrawal = true;
@@ -292,11 +287,11 @@ public class BankAccount {
                                         }
                                         break;
                                     case 4:
-                                        AccountInfo account = accounts.get(phoneNumberLogins);
+                                        AccountInfo account = data.getAccount(phoneNumberLogins);
                                         System.out.printf("Your account balance is: #%.2f%n", account.getBalance());
                                         break;
                                     case 5:
-                                        AccountInfo transferAccount = accounts.get(phoneNumberLogins);
+                                        AccountInfo transferAccount = data.getAccount(phoneNumberLogins);
                                         String receiverNumber;
                                         boolean transfer = false;
                                         while(!transfer) {
@@ -304,7 +299,7 @@ public class BankAccount {
                                             System.out.println("Enter beneficiary Account number or phoneNumber: ");
                                             receiverNumber = input.nextLine();
                                             while (!validatePhoneNumber(receiverNumber)) {
-                                                System.out.println("Invalid, make sure the number is eleven digits: ");
+                                                System.out.println("Please enter only 11 digits: ");
                                                 receiverNumber = input.nextLine();
                                             }
                                             if(phoneNumberLogins.equals(receiverNumber)) {
@@ -347,36 +342,34 @@ public class BankAccount {
                                                 transfer = true;
                                             }
                                             else {
-                                                AccountInfo receiver = accounts.get(receiverNumber);
+                                                AccountInfo receiver = data.getAccount(receiverNumber);
                                                 transferAccount.transferFund(receiver, amount);
-                                                System.out.printf("You have successfully transferred %.2f  to %s.", amount, receiver.getAccountUser());
-                                                System.out.println("Transfer successfully>>>>>>>>>.");
+                                                System.out.printf("You have successfully transferred #%.2f  to %s.", amount, receiver.getAccountUser());
                                                 transfer = true;
                                             }
                                         }
                                         break;
                                     case 6:
-                                        AccountInfo accountChangePin = accounts.get(phoneNumberLogins);
+                                        AccountInfo accountChangePin = data.getAccount(phoneNumberLogins);
                                         boolean exitPin = false;
                                         String changePin;
                                         while(!exitPin) {
                                             System.out.println("Enter your Current account PIN: ");
                                             String currentPin = input.nextLine();
                                             while (!validateForNumber0nlyPin(currentPin)) {
-                                                System.out.print("Invalid, make sure it is four digits: ");
+                                                System.out.println("Please enter only four digits Pin: .");
                                                 currentPin = input.nextLine();
                                             }
                                             int indexCurrentPin = phoneNumbers.indexOf(phoneNumberLogins);
                                             String valueOfCurrentPin = passCode.get(indexCurrentPin);
-
                                             if(!valueOfCurrentPin.equals(currentPin)) {
                                                 System.out.println("Wrong PIN");
                                                 break;
                                             }
                                             System.out.println("Enter your new account PIN: ");
                                             changePin = input.nextLine();
-                                            while(!validateForNumber0nlyPin(changePin)) {
-                                                System.out.print("Invalid, make sure it is four digits: .");
+                                            while (!validateForNumber0nlyPin(changePin)) {
+                                                System.out.println("Please enter only four digits Pin: .");
                                                 changePin = input.nextLine();
                                             }
                                             if(changePin.equals(currentPin)) {
@@ -387,7 +380,7 @@ public class BankAccount {
                                             System.out.println("Confirm your new account PIN: ");
                                             String confirmPin = input.nextLine();
                                             while (!validateForNumber0nlyPin(confirmPin)) {
-                                                System.out.print("Invalid, make sure it is four digits: .");
+                                                System.out.println("Please enter only four digits Pin: .");
                                                 confirmPin = input.nextLine();
                                             }
                                             if(!confirmPin.equals(changePin)) {
@@ -451,4 +444,5 @@ public class BankAccount {
         if(option.length()  == 1 && option.matches("^[0-9]+$") && (!option.isEmpty())) return true;
         return false;
     }
+
 }

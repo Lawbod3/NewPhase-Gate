@@ -60,13 +60,8 @@ public class TestBankDataBase {
         data.add(accountInfo);
         AccountInfo personal = data.getAccount(accountInfo.getAccountNumber());
         assertEquals(personal.getBalance(), accountInfo.getBalance(), 0);
-
-
-
-
-
-
     }
+
 
 
 
