@@ -15,6 +15,7 @@ public class AccountInfo {
 
     }
     public AccountInfo() {
+        this.accountNumber = getAccountNumber();
     }
 
     public void setPin(String number) {
@@ -67,4 +68,6 @@ public class AccountInfo {
         bank2.addDeposit(amount);
 
     }
+
+
 }
