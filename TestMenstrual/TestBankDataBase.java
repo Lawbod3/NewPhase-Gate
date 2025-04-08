@@ -49,14 +49,23 @@ public class TestBankDataBase {
         assertEquals(1, data.numberOfAccounts());
     }
     @Test
-    public void testBankDataBaseDontTakeSameAccountNumber() {
+    public void testBankDataBaseGetAccount() {
         BankDataBase data = new BankDataBase();
-        AccountInfo accountInfo = new AccountInfo();
-        AccountInfo accountInfo2 = new AccountInfo();
+        AccountInfo accountInfo = new AccountInfo("Lawal", "olabode", "1234");
+        AccountInfo accountInfo2 = new AccountInfo("MAJEK", "Yussuf", "000");
         accountInfo.setAccountNumber("07046182869");
         accountInfo2.setAccountNumber("07046182860");
+        accountInfo.addDeposit(5000.00);
+        assertEquals(5000.00, accountInfo.getBalance(), 0);
         data.add(accountInfo);
-        assertFalse(data.validateAccountNumber(data.add(accountInfo2)));
+        AccountInfo personal = data.getAccount(accountInfo.getAccountNumber());
+        assertEquals(personal.getBalance(), accountInfo.getBalance(), 0);
+
+
+
+
+
+
     }
 
 

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class BankAccount {
     public static void main(String[] args) {
+
         ArrayList<String> phoneNumbers = new ArrayList<>();
         ArrayList<String> passCode = new ArrayList<>();
         HashMap<String, AccountInfo> accounts = new HashMap<>();
@@ -90,9 +91,12 @@ public class BankAccount {
                             }
 
                         }
+                        BankDataBase data = new BankDataBase();
 
                         AccountInfo account = new AccountInfo(lastName, firstName, confirmPin);
+                        account.setAccountNumber(phoneNumber);
                         accounts.put(phoneNumber, account);
+                        data.add(account);
 
                         System.out.printf("Account created Successfully. Account number: %s\n>>>>>>>>>>>>.", phoneNumber);
 

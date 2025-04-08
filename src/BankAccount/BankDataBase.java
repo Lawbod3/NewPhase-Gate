@@ -27,4 +27,9 @@ public class BankDataBase {
     public void remove(AccountInfo accountInfo2) {
         accounts.remove(accountInfo2.getAccountNumber());
     }
+
+    public AccountInfo getAccount(String accountNumber) {
+        AccountInfo accountInfo = accounts.get(accountNumber);
+        return accountInfo;
+    }
 }
