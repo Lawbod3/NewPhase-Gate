@@ -83,7 +83,7 @@ public class NewMenstrual {
                         continue;
                     }
                     choice = Integer.parseInt(menuChoice);
-                    while (choice < 1 || choice > 2) {
+                    while (choice < 1 || choice > 4) {
                         System.out.print("Please enter NUMBER from 1 to 2: ");
                         keyboard.nextLine();
                         choice = keyboard.nextInt();
