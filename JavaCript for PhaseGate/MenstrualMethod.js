@@ -57,19 +57,10 @@ class MenstrualMethod{
     }
 
     getFertilityPeriod() {
-        const first = new Date(this.firstDayOfLastPeriod);
-        first.setDate(first.getDate() + this.periodDays + 5);
-        const fertilityStart= new Date(first);
+        const first= this.getNextOvulation();
+        const fertilityStart = new Date(first);
+        fertilityStart.setDate(fertilityStart.getDate() - 4);
 
-        if (this.periodDays > 28) {
-            fertilityStart.setDate(fertilityStart.getDate() + this.periodDays + 11);
-        }
-        else if(this.periodDays > 24) {
-            fertilityStart.setDate(fertilityStart.getDate() + this.periodDays + 9);
-        }
-        else{
-            fertilityStart.setDate(fertilityStart.getDate() + this.periodDays + 5);
-        }
         const fertilityEnd = this.getNextOvulation();
         return `${this.formatDate(fertilityStart)} - ${fertilityEnd}`;
     }
@@ -94,25 +85,17 @@ class MenstrualMethod{
 
     getEndOfNextCycle() {
         const first = new Date(this.firstDayOfLastPeriod);
-        first.setDate(first.getDate() + periodDays + periodDays - 1);
+        first.setDate(first.getDate() + this.periodDays + this.periodDays - 1);
         return this.formatDate(first);
 
     }
 
     getNextPostOvulation() {
         const endOfNextCycle = this.getEndOfNextCycle();
-        const first = new Date(this.firstDayOfLastPeriod);
-        let nextOvulation = new Date(first);
-        nextOvulation.setDate(nextOvulation.getDate() + this.periodDays + 10);
-        if (periodDays > 24) {
-            nextOvulation.setDate(first.getDate() + this.periodDays + 15);
-        }
-        else if (periodDays > 28) {
-            nextOvulation.setDate(nextOvulation.getDate() + this.periodDays + 17);
-        }
-        else if (periodDays > 33) {
-            nextOvulation.setDate(nextOvulation.getDate() + this.periodDays + 22);
-        }
+        const first = this.getNextOvulation();
+        const nextOvulation = new Date(first);
+        nextOvulation.setDate(nextOvulation.getDate() + 1);
+
         return `${this.formatDate(nextOvulation)} - ${endOfNextCycle}`
 
     }

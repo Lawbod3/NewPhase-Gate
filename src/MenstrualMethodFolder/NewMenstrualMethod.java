@@ -43,16 +43,9 @@ public class NewMenstrualMethod {
 
     public String getFertilityPeriod() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate setDate = LocalDate.parse(firstDayOfLastPeriod, formatter);
-        LocalDate nextFertilityPeriod = setDate.plusDays(periodDays + 5);
-        if(periodDays > 24) {
-            LocalDate nextFertilityPeriod2 = setDate.plusDays(periodDays + 9);
-            return String.valueOf(nextFertilityPeriod2.format(formatter)) + " - " + String.valueOf(getNextOvulation());
-        }
-        else if (periodDays > 28) {
-            LocalDate nextFertilityPeriod3 = setDate.plusDays(periodDays + 11);
-            return String.valueOf(nextFertilityPeriod3.format(formatter)) + " - " + String.valueOf(getNextOvulation());
-        }
+        LocalDate setDate = LocalDate.parse(getNextOvulation(), formatter);
+        LocalDate nextFertilityPeriod = setDate.plusDays(  5);
+
         return String.valueOf(nextFertilityPeriod.format(formatter)) + " - " + String.valueOf(getNextOvulation());
     }
 
@@ -89,20 +82,9 @@ public class NewMenstrualMethod {
 
     public String getNextPostOvulation() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate setDate = LocalDate.parse(firstDayOfLastPeriod, formatter);
-        LocalDate nextOvulation = setDate.plusDays(periodDays + 10);
-        if (periodDays > 24) {
-            LocalDate nextOvulation2 = setDate.plusDays(periodDays + 15);
-            return nextOvulation2.format(formatter)  + " - " + String.valueOf(getEndOfNextCycle());
-        }
-        else if (periodDays > 28) {
-            LocalDate nextOvulation3 = setDate.plusDays(periodDays + 17);
-            return nextOvulation3.format(formatter) + " - " + String.valueOf(getEndOfNextCycle());
-        }
-        else if (periodDays > 33) {
-            LocalDate nextOvulation4 = setDate.plusDays(periodDays + 22);
-            return nextOvulation4.format(formatter) +  " - " + String.valueOf(getEndOfNextCycle());
-        }
+        LocalDate setDate = LocalDate.parse(getNextOvulation(), formatter);
+        LocalDate nextOvulation = setDate.plusDays(  1);
+
         return nextOvulation.format(formatter) + " - " + String.valueOf(getEndOfNextCycle());
 
     }
