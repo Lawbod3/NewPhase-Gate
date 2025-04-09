@@ -10,12 +10,8 @@ public class CreditCard {
         System.out.println("App to validate CreditCard");
         System.out.print("Hello, Kindly enter card number to verify: ");
         String number = input.nextLine();
-        while (!cc.validateStringOfNumbers(number)){
-            System.out.print("Wrong card number: ");
-            number = input.nextLine();
-        }
-        while (!cc.validateLength(number)){
-            System.out.print("Wrong length it be between 13 and 16: ");
+        while (!cc.validateStringOfNumbers(number) || !cc.validateLength(number)){
+            System.out.print("Please make sure card number is correct, try again: ");
             number = input.nextLine();
         }
 
@@ -38,6 +34,7 @@ public class CreditCard {
                     *****Credit Card Digit Length: %d
                     *****Credit Card Validity Status: %s
                     """, cc.getCardType(number), number, number.length(), result);
+            System.out.println("Thank you for using the Credit Card Validator App!");
         }
         else{
             System.out.printf("""
@@ -46,6 +43,8 @@ public class CreditCard {
                     *****Credit Card Digit Length: %d
                     *****Credit Card Validity Status: %s
                     """,  number, number.length(), result);
+            System.out.println("Please try again with a valid card number.");
+            System.out.println("Thank you for using the Credit Card Validator App!");
         }
 
 
