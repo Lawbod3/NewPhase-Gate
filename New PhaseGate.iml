@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/TestMenstrual" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/JavaCript for PhaseGate" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Test javascript" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,4 +1,4 @@
-class menstrualMethod{
+class MenstrualMethod{
 
     constructor(periodDays, flowDays, firstDayOfLastPeriod) {
         this.periodDays = periodDays;
@@ -7,6 +7,10 @@ class menstrualMethod{
     }
 
     formatDate(date) {
+
+        if (!(date instanceof Date) || isNaN(date)) {
+            throw new Error("Invalid date passed to formatDate: " + date);
+        }
         return new Intl.DateTimeFormat('en-US', {
             year: 'numeric',
             month: '2-digit',
@@ -15,8 +19,8 @@ class menstrualMethod{
     }
 
     setPeriodDays(days) {
-    this.periodDays = days;
-}
+        this.periodDays = days;
+    }
 
     setLastPeriodDate(input) {
         this.firstDayOfLastPeriod = input;
@@ -28,44 +32,53 @@ class menstrualMethod{
 
     getNextPeriodDays() {
         const first = new Date(this.firstDayOfLastPeriod);
-       const nextPeriodDays = String(first.setDate(first.getDate() + this.periodDays));
-       return this.formatDate(nextPeriodDays);
+        first.setDate(first.getDate() + this.periodDays);
+        return this.formatDate(first);
 
     }
     getNextOvulation() {
         const first = new Date(this.firstDayOfLastPeriod);
-        const nextPeriodDays = first.setDate(first.getDate() + this.periodDays)
-         let ovulationDate   = String(nextPeriodDays.setDate(nextPeriodDays.getDate() + 9));
-        if (this.periodDays > 24) {
-            ovulationDate =  String(nextPeriodDays.setDate(nextPeriodDays.getDate() + 14));
+        first.setDate(first.getDate() + this.periodDays)
+        let ovulationDate   = new Date(first);
+
+        if (this.periodDays > 33) {
+            ovulationDate.setDate(ovulationDate.getDate() + 21);
         }
         else if (this.periodDays > 28) {
-            ovulationDate =  String(nextPeriodDays.setDate(nextPeriodDays.getDate() + 16));
+            ovulationDate.setDate(ovulationDate.getDate() + 16);
         }
-        else if (this.periodDays > 33) {
-            ovulationDate =  String(nextPeriodDays.setDate(nextPeriodDays.getDate() + 21));
+        else if (this.periodDays > 24) {
+            ovulationDate.setDate(ovulationDate.getDate() + 14);
+        }
+        else  {
+            ovulationDate.setDate(ovulationDate.getDate() + 9);
         }
         return this.formatDate(ovulationDate)
     }
 
     getFertilityPeriod() {
         const first = new Date(this.firstDayOfLastPeriod);
-        let fertilityStart = first.setDate(first.getDate() + this.periodDays + 5);
-        const fertilityEnd = this.getNextOvulation();
+        first.setDate(first.getDate() + this.periodDays + 5);
+        const fertilityStart= new Date(first);
 
-        if(this.periodDays > 24) {
-             fertilityStart = first.setDate(first.getDate() + this.periodDays + 9) ;
+        if (this.periodDays > 28) {
+            fertilityStart.setDate(fertilityStart.getDate() + this.periodDays + 11);
         }
-        else if (this.periodDays > 28) {
-            fertilityStart = first.setDate(first.getDate() + this.periodDays + 11);
+        else if(this.periodDays > 24) {
+            fertilityStart.setDate(fertilityStart.getDate() + this.periodDays + 9);
         }
+        else{
+            fertilityStart.setDate(fertilityStart.getDate() + this.periodDays + 5);
+        }
+        const fertilityEnd = this.getNextOvulation();
         return `${this.formatDate(fertilityStart)} - ${fertilityEnd}`;
     }
 
 
     getNextFlowDays() {
         const  first = new Date(this.firstDayOfLastPeriod);
-        let nextFlowDays = first.setDate(first.getDate() + this.periodDays + this.flowDays);
+        let nextFlowDays = new Date(first);
+        nextFlowDays.setDate(nextFlowDays.getDate() + this.periodDays + this.flowDays);
         let period  = this.getNextPeriodDays();
         return `${period} - ${this.formatDate(nextFlowDays)}`
     }
@@ -73,35 +86,53 @@ class menstrualMethod{
     getNextPreOvulation() {
         const ovulationDate = this.getNextOvulation();
         const first = new Date(ovulationDate);
-        let nextPreOvulation = first.setDate(first.getDate() - 1);
+        first.setDate(first.getDate() - 1);
         let period = this.getNextPeriodDays();
 
-        return `${period} - ${this.formatDate(nextPreOvulation)}`
+        return `${period} - ${this.formatDate(first)}`
     }
 
     getEndOfNextCycle() {
         const first = new Date(this.firstDayOfLastPeriod);
-        let endPeriod = first.setDate(first.getDate() + periodDays + periodDays - 1);
-        return this.formatDate(endPeriod);
+        first.setDate(first.getDate() + periodDays + periodDays - 1);
+        return this.formatDate(first);
 
     }
 
     getNextPostOvulation() {
         const endOfNextCycle = this.getEndOfNextCycle();
         const first = new Date(this.firstDayOfLastPeriod);
-        let nextOvulation = first.setDate(first.getDate() + this.periodDays + 10);
+        let nextOvulation = new Date(first);
+        nextOvulation.setDate(nextOvulation.getDate() + this.periodDays + 10);
         if (periodDays > 24) {
-            nextOvulation = first.setDate(first.getDate() + this.periodDays + 15);
+            nextOvulation.setDate(first.getDate() + this.periodDays + 15);
         }
         else if (periodDays > 28) {
-            nextOvulation = first.setDate(first.getDate() + this.periodDays + 17);
+            nextOvulation.setDate(nextOvulation.getDate() + this.periodDays + 17);
         }
         else if (periodDays > 33) {
-            nextOvulation = first.setDate(first.getDate() + this.periodDays + 22);
+            nextOvulation.setDate(nextOvulation.getDate() + this.periodDays + 22);
         }
         return `${this.formatDate(nextOvulation)} - ${endOfNextCycle}`
 
     }
 
+    getSafeDay() {
+        const first = new Date(this.firstDayOfLastPeriod);
+        const nextFlowDays = new Date(first);
+        nextFlowDays.setDate(first.getDate() + this.periodDays + this.flowDays + 2);
+        const period = this.getNextPeriodDays();
+        return `${period} - ${this.formatDate(nextFlowDays)}`;
+    }
 
+    getPostOvulationSafeDay() {
+        const ovulationDate = this.getNextOvulation();
+        const safeStart = new Date(ovulationDate);
+        safeStart.setDate(safeStart.getDate() + 2);
+        const safeEnd = this.getEndOfNextCycle();
+        return `${this.formatDate(safeStart)} - ${safeEnd}`;
+    }
 }
+
+
+module.exports = MenstrualMethod;
